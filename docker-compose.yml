@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  syncthing:
+    image: syncthing/syncthing:1.23
