@@ -1,5 +1,5 @@
 .idea
 app/config.ini
 __pycache__
-zettelkasten/*
+syncthing/*
 app/venv

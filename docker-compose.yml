@@ -14,7 +14,7 @@ services:
     user: "1000:1000"
     volumes:
       - ./app:/app:z
-      - ./zettelkasten:/var/syncthing:z
+      - ./zettelkasten:/var/zettelkasten:z
     container_name: bot
 
   syncthing:
@@ -30,5 +30,5 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - ./zettelkasten:/var/syncthing:z
+      - ./syncthing:/var/syncthing:z
     container_name: syncthing
