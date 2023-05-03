@@ -1,4 +1,5 @@
 .idea
 app/config.ini
+__pycache__
 zettelkasten/*
 app/venv

@@ -7,8 +7,7 @@ class Send():
         super().__init__()
         self.token = parse_token()
 
-    def send_message(url):
-        "Получение кода html по url"
-        response = requests.get(url)
-        print(response)
-        return response.text
+    def send_message():
+        "Отправка текста"
+        text = "Здесь мой текст"
+        return text

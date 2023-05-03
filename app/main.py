@@ -1,12 +1,12 @@
+import telebot
+from model.send import *
+from controllers.routes import handlers
+
+bot = telebot.TeleBot(parse_token())
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
+bot.message_handler(commands=['start'])(handlers.start_handler)
+bot.message_handler(commands=['help'])(handlers.help_handler)
+bot.message_handler(commands=['text'])(handlers.text_handler)
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    bot.polling(none_stop=True)
