@@ -1,8 +1,8 @@
 from model.config_parser import parse_folder
 
 
-class Index():
-    "Класс для функций, обрабатывающих get-запросы"
+class Index:
+    "Класс для функций, индексирующих файлы"
     def __init__(self, uri):
         super().__init__()
         self.folder = parse_folder()
