@@ -14,6 +14,7 @@ services:
     user: "1000:1000"
     volumes:
       - ./app:/app:z
+      - ./zettelkasten:/var/syncthing:z
     container_name: bot
 
   syncthing:

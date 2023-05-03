@@ -1,4 +1,3 @@
-import telebot
 from model.config_parser import parse_token
 
 class Send():

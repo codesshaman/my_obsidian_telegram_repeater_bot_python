@@ -1,5 +1,5 @@
 import telebot
-from model.send import *
+from model.send_module.send import *
 from model.config_parser import *
 bot = telebot.TeleBot(parse_token())
 
