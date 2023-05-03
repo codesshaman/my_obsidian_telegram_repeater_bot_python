@@ -19,3 +19,8 @@ def help_handler(message):
 def text_handler(message):
     text = Send.send_message()
     bot.send_message(message.chat.id, text)
+
+
+@bot.message_handler(commands=['help'])
+def health_handler(message):
+    bot.send_message(message.chat.id, 'Я здоров!')
