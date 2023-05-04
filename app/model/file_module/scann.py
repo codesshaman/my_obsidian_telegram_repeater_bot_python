@@ -1,4 +1,4 @@
-import os, re
+import os
 from model.config_parser import parse_folder
 
 
@@ -40,8 +40,11 @@ class Scan:
         answer.append(False) if 'categories' in dir else answer.append(True)
         answer.append(False) if 'lists' in dir else answer.append(True)
         answer.append(False) if 'notes' in dir else answer.append(True)
-        print(answer)
-        return answer
+        result = True
+        for elem in answer:
+            if elem == False:
+                result = False
+        return result
     def scan_subsection():
         "Сканирование разделов"
         text = "Сканирую папку"

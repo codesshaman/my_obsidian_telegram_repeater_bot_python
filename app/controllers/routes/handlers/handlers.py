@@ -1,9 +1,8 @@
 from model.send_module.send import Send
 from model.core.bot import bot
-from telebot import types
-
-keyboard1 = types.ReplyKeyboardMarkup()
-keyboard1.row('Ok', 'Bye')
+# from telebot import types
+# keyboard1 = types.ReplyKeyboardMarkup()
+# keyboard1.row('Ok', 'Bye')
 
 
 @bot.message_handler(commands=['start'])
