@@ -10,25 +10,26 @@ services:
       retries: 3
     restart: unless-stopped
     ports:
-      - "8070:8080"
+      - "$BOTPORT:8080"
     user: "1000:1000"
     volumes:
       - ./app:/app:z
       - ./zettelkasten:/var/zettelkasten:z
-    container_name: bot
+    container_name: $BOTNAME
 
   syncthing:
     image: syncthing/syncthing:1.23
     restart: unless-stopped
     ports:
-      - 8384:8384 # Web UI
-      - 22000:22000/tcp # TCP file transfers
-      - 22000:22000/udp # QUIC file transfers
-      - 21027:21027/udp # Receive local discovery broadcasts
+      - "$SYNCHGUI:8384" # Web UI
+      - "22000:22000/tcp" # TCP file transfers
+      - "22000:22000/udp" # QUIC file transfers
+      - "21027:21027/udp" # Receive local discovery broadcasts
     hostname: my-syncthing
-    environment:
-      - PUID=1000
-      - PGID=1000
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+    user: "1000:1000"
     volumes:
       - ./syncthing:/var/syncthing:z
-    container_name: syncthing
+    container_name: $SYNCNAME
