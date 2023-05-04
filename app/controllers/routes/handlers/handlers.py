@@ -23,7 +23,6 @@ def help_handler(message):
     bot.send_message(message.chat.id, msg)
 
 
-
 # @bot.message_handler(func=lambda message: True)
 # def send_text(message):
 #     if message.text.lower() == 'Hello':

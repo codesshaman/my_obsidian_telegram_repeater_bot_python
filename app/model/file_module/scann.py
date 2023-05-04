@@ -10,8 +10,10 @@ class Scan:
     def scan():
         "Сканирование разделов"
         folder = parse_folder()
-        text = "Сканирую папку" + folder
-        return text
+        result = os.scandir(folder)
+        print("Сканирую папку " + folder)
+
+        return str(result)
 
     def scan_section():
         "Сканирование разделов"
