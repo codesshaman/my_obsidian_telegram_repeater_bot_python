@@ -19,12 +19,18 @@ class Create:
         super().__init__()
 
     def create_note():
-        "Создание заметки"
-        return 'Создание заметки'
+        "Создание заметкий"
+        return 'Создание заметки2'
 
     def create_category():
         "Создание категории"
-        return 'Создание категории'
+        text = 'Создание категории'
+        return text
+
+    def create_subcategory():
+        "Создание категории"
+        text = 'Создание подкатегории'
+        return text
 
     def create_folders():
         "Создание недостающих папок"

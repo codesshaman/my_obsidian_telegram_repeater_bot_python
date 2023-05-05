@@ -1,47 +1,39 @@
-import os
-from model.config_parser import parse_folder
+from controllers.routes.handlers import allmenu
+from model.file_module.setting import Set
+from model.core.bot import bot
+from telebot import types
 
 
-def dirscan():
-    "Сканирование существующих папок"
-    folder = parse_folder()
-    result = os.scandir(folder)
-    directories = []
-    for item in result:
-        if item.is_dir():
-            directories.append(item)
-    return directories
+@bot.message_handler(content_types=['text'])
+def handler(message):
+    if message.chat.type == 'private':
+        print('Попал в обработчик настроек')
+        ######################################
+        # Команды, приходящие из главного меню
+        ######################################
+        if message.text == '⚙ Настройки':
+            print('Выбрал нужный if')
+            settings(message)
+        #####################################
+        # Команды, приходящие из данного меню
+        #####################################
+        if message.text == '🗓 Настройка повторений':
+            choose_category(message)
+        if message.text == '📁 Проверка папок':
+            create_cat(message)
+        if message.text == '❓ Справка':
+            create_sub(message)
+        if message.text == '⬅ Назад':
+            allmenu.main_menu(message)
 
 
-class Create:
-    "Класс создания файлов и папок"
-    def __init__(self, uri):
-        super().__init__()
-
-    def create_note():
-        "Создание заметки"
-        return 'Создание заметки'
-
-    def create_category():
-        "Создание категории"
-        return 'Создание категории'
-
-    def create_folders():
-        "Создание недостающих папок"
-        dir = dirscan()
-        folder = parse_folder()
-        creation = True
-        dirnames = ['categories', 'lists', 'notes', 'repeats']
-        for elem in dirnames:
-            if elem not in dir:
-                new = os.path.join(folder, elem.encode('unicode-escape').decode())
-                print(new)
-                if not os.path.exists(new):
-                    os.makedirs(new)
-                    answer = "Папка " + dirname + " создана."
-                else:
-                    answer = "Папка " + dirname + " уже существует."
-            else:
-                answer = "Папка " + dirname + " уже существует."
-        print(answer)
-        return answer
+@bot.message_handler(commands=['settings'])
+def settings(message):
+    print('Попал в меню настроек')
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton('🗓 Настройка повторений')
+    item2 = types.KeyboardButton('📁 Проверка папок')
+    item3 = types.KeyboardButton('❓ Справка')
+    item4 = types.KeyboardButton('⬅ Назад')
+    markup.add(item1, item2, item3, item4)
+    bot.send_message(message.chat.id, 'Меню настроек', reply_markup=markup)
