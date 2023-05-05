@@ -18,11 +18,11 @@ def handler(message):
         # Команды, приходящие из данного меню
         #####################################
         if message.text == '🗓 Настройка повторений':
-            choose_category(message)
+            repeats(message)
         if message.text == '📁 Проверка папок':
-            create_cat(message)
+            folders(message)
         if message.text == '❓ Справка':
-            create_sub(message)
+            reference(message)
         if message.text == '⬅ Назад':
             allmenu.main_menu(message)
 
@@ -31,9 +31,39 @@ def handler(message):
 def settings(message):
     print('Попал в меню настроек')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton('🗓 Настройка повторений')
-    item2 = types.KeyboardButton('📁 Проверка папок')
-    item3 = types.KeyboardButton('❓ Справка')
-    item4 = types.KeyboardButton('⬅ Назад')
+    item1 = types.KeyboardButton(u'🗓 Настройка повторений')
+    item2 = types.KeyboardButton(u'📁 Проверка папок')
+    item3 = types.KeyboardButton(u'❓ Справка')
+    item4 = types.KeyboardButton(u'⬅ Назад')
     markup.add(item1, item2, item3, item4)
     bot.send_message(message.chat.id, 'Меню настроек', reply_markup=markup)
+
+@bot.message_handler(commands=['rep'])
+def repeats(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton(u'🗓 Настройки повторений')
+    item2 = types.KeyboardButton(u'⬅ Назад')
+    markup.add(item1, item2)
+    answer = 'Настройки повторений'
+    bot.send_message(message.chat.id, answer, reply_markup=markup)
+
+
+@bot.message_handler(commands=['folders'])
+def folders(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton(u'📁 Проверить директории')
+    item2 = types.KeyboardButton(u'⬅ Назад')
+    markup.add(item1, item2)
+    answer = 'Проверить директории'
+    bot.send_message(message.chat.id, answer, reply_markup=markup)
+
+
+@bot.message_handler(commands=['reference'])
+def reference(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton(u'❓ Справка о программе')
+    item2 = types.KeyboardButton(u'⬅ Назад')
+    markup.add(item1, item2)
+    answer = '❓ Справка'
+    bot.send_message(message.chat.id, answer, reply_markup=markup)
+

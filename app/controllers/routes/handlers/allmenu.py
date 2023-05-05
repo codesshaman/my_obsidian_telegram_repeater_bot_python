@@ -8,10 +8,10 @@ from telebot import types
 @bot.message_handler(commands=['start'])
 def main_menu(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton('✍ Новая категория')
-    item2 = types.KeyboardButton('✏ Новая заметка')
-    item3 = types.KeyboardButton('📋 Просмотр заметок')
-    item4 = types.KeyboardButton('⚙ Настройки')
+    item1 = types.KeyboardButton(u'✍ Новая категория')
+    item2 = types.KeyboardButton(u'✏ Новая заметка')
+    item3 = types.KeyboardButton(u'📋 Просмотр заметок')
+    item4 = types.KeyboardButton(u'⚙ Настройки')
     markup.add(item1, item2, item3, item4)
     bot.send_message(message.chat.id, 'Главное меню бота', reply_markup=markup)
 
