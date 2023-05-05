@@ -1,40 +1,44 @@
 from controllers.routes.handlers import allmenu
 from model.file_module.setting import Set
+from views.all_buttons import Buttons
 from model.core.bot import bot
 from telebot import types
 
+settings_menu = Buttons.settings_menu()
+back_button = Buttons.back_button()
+settings_button = Buttons.settings_button()
 
 @bot.message_handler(content_types=['text'])
 def handler(message):
     if message.chat.type == 'private':
-        print('Попал в обработчик настроек')
-        ######################################
-        # Команды, приходящие из главного меню
-        ######################################
-        if message.text == '⚙ Настройки':
-            print('Выбрал нужный if')
-            settings(message)
         #####################################
         # Команды, приходящие из данного меню
         #####################################
-        if message.text == '🗓 Настройка повторений':
-            repeats(message)
-        if message.text == '📁 Проверка папок':
-            folders(message)
-        if message.text == '❓ Справка':
-            reference(message)
-        if message.text == '⬅ Назад':
-            allmenu.main_menu(message)
+        if message.text in settings_menu:
+            if message.text == settings_menu[0]:
+                repeats(message)
+            if message.text == settings_menu[1]:
+                folders(message)
+            if message.text == settings_menu[2]:
+                reference(message)
+            if message.text == settings_menu[3]:
+                allmenu.main_menu(message)
+            ######################################
+            # Команды, приходящие из главного меню
+            ######################################
+        else:
+            if message.text == settings_button:
+                settings(message)
 
 
 @bot.message_handler(commands=['settings'])
 def settings(message):
     print('Попал в меню настроек')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton(u'🗓 Настройка повторений')
-    item2 = types.KeyboardButton(u'📁 Проверка папок')
-    item3 = types.KeyboardButton(u'❓ Справка')
-    item4 = types.KeyboardButton(u'⬅ Назад')
+    item1 = types.KeyboardButton(settings_menu[0])
+    item2 = types.KeyboardButton(settings_menu[1])
+    item3 = types.KeyboardButton(settings_menu[2])
+    item4 = types.KeyboardButton(settings_menu[3])
     markup.add(item1, item2, item3, item4)
     bot.send_message(message.chat.id, 'Меню настроек', reply_markup=markup)
 

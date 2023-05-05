@@ -4,27 +4,36 @@ from model.core.bot import bot
 from telebot import types
 
 
+creation_menu = [
+    '✏ Выбрать категорию',
+    '✍ Создать категорию',
+    '✏ Создать подкатегорию',
+    '⬅ Назад'
+]
+
 @bot.message_handler(content_types=['text'])
 def handler(message):
     if message.chat.type == 'private':
-        ######################################
-        # Команды, приходящие из главного меню
-        ######################################
-        if message.text == '✍ Новая категория':
-            new_category(message)
-        if message.text == '✏ Новая заметка':
-            new_note(message)
         #####################################
         # Команды, приходящие из данного меню
         #####################################
-        if message.text == '✏ Выбрать категорию':
-            choose_category(message)
-        if message.text == '✍ Создать категорию':
-            create_cat(message)
-        if message.text == '✏ Создать подкатегорию':
-            create_sub(message)
-        if message.text == '⬅ Назад':
-            allmenu.main_menu(message)
+        if message.text in creation_menu:
+            if message.text == creation_menu[0]:
+                choose_category(message)
+            if message.text == creation_menu[1]:
+                create_cat(message)
+            if message.text == creation_menu[2]:
+                create_sub(message)
+            if message.text == creation_menu[3]:
+                allmenu.main_menu(message)
+        else:
+        ######################################
+        # Команды, приходящие из главного меню
+        ######################################
+            if message.text == '✍ Новая категория':
+                new_category(message)
+            if message.text == '✏ Новая заметка':
+                new_note(message)
 
 
 @bot.message_handler(commands=['note'])
