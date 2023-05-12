@@ -1,35 +1,31 @@
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+
 class Buttons:
     "Класс для отображения кнопок"
     def __init__(self, uri):
         super().__init__()
         self.uri = "https://apps.timwhitlock.info/emoji/tables/unicode"
 
-    @staticmethod
-    def main_menu():
-        menu = [
-            u'📋 Просмотр заметок',
-            u'📝 Новая категория',
-            u'📌 Новая заметка',
-            u'🔧 Настройки'
-        ]
-        return menu
+    def main_set(lang):
+        return u'🔧 Настройки' if lang == "ru" else u'🔧 Settings'
 
-    @staticmethod
-    def settings_menu():
-        menu = [
-            u'🗓 Настройка повторений',
-            u'📁 Проверка папок',
-            u'❓ Справка',
-            u'⬅ Назад'
-        ]
-        return menu
+    def main_view(lang):
+        return u'📋 Просмотр заметок' if lang == "ru" else u'📋 View notes'
 
-    @staticmethod
-    def back_button():
-        bb = u'⬅ Назад'
-        return bb
+    def main_cat(lang):
+        return u'📝 Новая категория' if lang == "ru" else u'📝 New category'
 
-    @staticmethod
-    def settings_button():
-        sb = '⚙ Настройки'
-        return sb
+    def main_note(lang):
+        return u'📌 Новая заметка' if lang == "ru" else u'📌 New note'
+
+    def set_rep(lang):
+        return u'📅 Настройки повторений' if lang == "ru" else u'📅 Repeats settings'
+
+    def set_lang(lang):
+        return u'🌏 Язык приложения' if lang == "ru" else u'🌏 Application language'
+
+    def set_help(lang):
+        return u'❓ Справка' if lang == "ru" else u'❓ About'
+
+    def set_back(lang):
+        return u'↩ Назад' if lang == "ru" else u'↩ Back'

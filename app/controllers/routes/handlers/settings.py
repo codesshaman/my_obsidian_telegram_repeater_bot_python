@@ -1,73 +1,37 @@
-from controllers.routes.handlers import allmenu
-from model.file_module.setting import Set
+from controllers.routes.handlers import mainmenu
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from views.all_buttons import Buttons
-from model.core.bot import bot
-from telebot import types
+from model.core.bot import bot, dp
+from aiogram import types
 
-settings_menu = Buttons.settings_menu()
-back_button = Buttons.back_button()
-settings_button = Buttons.settings_button()
+lang = "ru"
 
-@bot.message_handler(content_types=['text'])
-def handler(message):
-    if message.chat.type == 'private':
-        #####################################
-        # Команды, приходящие из данного меню
-        #####################################
-        if message.text in settings_menu:
-            if message.text == settings_menu[0]:
-                repeats(message)
-            if message.text == settings_menu[1]:
-                folders(message)
-            if message.text == settings_menu[2]:
-                reference(message)
-            if message.text == settings_menu[3]:
-                allmenu.main_menu(message)
-            ######################################
-            # Команды, приходящие из главного меню
-            ######################################
-        else:
-            if message.text == settings_button:
-                settings(message)
+b1 = Buttons.set_rep(lang)
+b2 = Buttons.set_lang(lang)
+b3 = Buttons.set_help(lang)
+b4 = Buttons.set_back(lang)
+
+markup = ReplyKeyboardMarkup(resize_keyboard=True)
+markup.add(b1).insert(b2).add(b3).insert(b4)
 
 
-@bot.message_handler(commands=['settings'])
-def settings(message):
-    print('Попал в меню настроек')
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton(settings_menu[0])
-    item2 = types.KeyboardButton(settings_menu[1])
-    item3 = types.KeyboardButton(settings_menu[2])
-    item4 = types.KeyboardButton(settings_menu[3])
-    markup.add(item1, item2, item3, item4)
-    bot.send_message(message.chat.id, 'Меню настроек', reply_markup=markup)
-
-@bot.message_handler(commands=['rep'])
-def repeats(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton(u'🗓 Настройки повторений')
-    item2 = types.KeyboardButton(u'⬅ Назад')
-    markup.add(item1, item2)
-    answer = 'Настройки повторений'
-    bot.send_message(message.chat.id, answer, reply_markup=markup)
+@dp.message_handler(commands=['settings'])
+async def settings(message: types.Message):
+    await message.reply("Меню настроек",  reply_markup=markup)
 
 
-@bot.message_handler(commands=['folders'])
-def folders(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton(u'📁 Проверить директории')
-    item2 = types.KeyboardButton(u'⬅ Назад')
-    markup.add(item1, item2)
-    answer = 'Проверить директории'
-    bot.send_message(message.chat.id, answer, reply_markup=markup)
+async def settings_handler(message: types.Message):
+    try:
+        if message.text == b1:
+            await message.answer("Настройки повторений")
+        elif message.text == b2:
+            await message.answer("Настройки языка")
+        elif message.text == b3:
+            await message.answer("Справка")
+        elif message.text == b4:
+            mainmenu.handler(message)
+    except Exception as e:
+        print(e)
 
-
-@bot.message_handler(commands=['reference'])
-def reference(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton(u'❓ Справка о программе')
-    item2 = types.KeyboardButton(u'⬅ Назад')
-    markup.add(item1, item2)
-    answer = '❓ Справка'
-    bot.send_message(message.chat.id, answer, reply_markup=markup)
-
+dp.register_message_handler(settings, commands=['settings'])
+dp.register_message_handler(settings_handler)
