@@ -1,7 +1,7 @@
 from controllers.routes.handlers import creation
 # from controllers.routes.handlers import overview
 # from controllers.routes.handlers import settings
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, CallbackQuery, CallbackData
 from views.all_buttons import Buttons
 from model.core.bot import bot, dp
 from aiogram import types
@@ -34,8 +34,10 @@ async def settings(message: types.Message):
     await message.reply("Меню настроек",  reply_markup=sett)
 
 
+@dp.callback_query_handler(lambda c: c.data in [m1, m2, m3, m4])
 async def handler(message: types.Message):
     try:
+        print("Перешёл в обработчик меню")
         if message.text == m1:
             await message.answer("Просмотреть заметки")
         elif message.text == m2:
@@ -43,13 +45,15 @@ async def handler(message: types.Message):
         elif message.text == m3:
             await message.answer("Создание категории")
         elif message.text == m4:
-            settings_handler(message)
+            await settings(message)
     except Exception as e:
         print(e)
 
 
+@dp.callback_query_handler(lambda c: c.data in [s1, s2, s3, s4])
 async def settings_handler(message: types.Message):
     try:
+        print("Перешёл в обработчик настроек")
         if message.text == s1:
             await message.answer("Настройки повторений")
         elif message.text == s2:
@@ -57,7 +61,7 @@ async def settings_handler(message: types.Message):
         elif message.text == s3:
             await message.answer("Справка")
         elif message.text == s4:
-            handler(message)
+            await main_menu(message)
     except Exception as e:
         print(e)
 
